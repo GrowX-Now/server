@@ -1,0 +1,44 @@
+{
+  "name": "growx",
+  "version": "1.0.0",
+  "description": "GrowX",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node.js",
+    "express",
+    "jwt",
+    "authentication",
+    "mongodb"
+  ],
+  "author": "bezkoder",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.1",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "compromise": "^14.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.1",
+    "fs": "^0.0.1-security",
+    "handlebars": "^4.7.8",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.11.2",
+    "multer": "^1.4.3",
+    "multer-gridfs-storage": "^5.0.2",
+    "nodemailer": "^6.9.6",
+    "openai": "^4.17.0",
+    "path": "^0.12.7",
+    "socket.io": "^4.7.4",
+    "ws": "^8.16.0",
+    "youtube-transcript": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
