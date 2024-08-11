@@ -78,7 +78,7 @@ const signup = (req, res) => {
     }
   });
 
-  const verificationLink = `https://growx-server.onrender.com/api/auth/verify-email/${verificationToken}`;
+  const verificationLink = `http://localhost:8080/api/auth/verify-email/${verificationToken}`;
   const options = {
     to: req.body.email,
     from: '"GrowX Support" <growx.edu@hotmail.com>',

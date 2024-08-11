@@ -22,10 +22,10 @@ module.exports = function (app) {
     "/api/quizzes/:quizId/progress/:userId",
     controller.getUserQuizProgress
   );
-  app.delete(
-    "/api/quizzes/:quizId/progress/:userId",
-    controller.resetUserQuizProgress
-  );
+  // app.delete(
+  //   "/api/quizzes/:quizId/progress/:userId",
+  //   controller.resetUserQuizProgress
+  // );
   app.delete("/api/quizzes/:quizId", controller.deleteQuiz);
   app.post("/api/quizzes/updateScores/:quizId", controller.updateStudies);
 

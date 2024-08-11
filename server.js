@@ -4,10 +4,6 @@ require("dotenv").config();
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081",
-};
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,7 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 const GameType = db.gameType;
 const Role = db.role;
-const Course = db.course;
 
 db.mongoose
   .connect(

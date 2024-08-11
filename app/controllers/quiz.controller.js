@@ -57,7 +57,7 @@ const createQuiz = async (req, res) => {
   while (retryCount > 0) {
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4-1106-preview",
         messages: [
           {
             role: "system",
@@ -325,27 +325,27 @@ const updateQuestionStatusInQuiz = async (req, res) => {
     if (!quiz) {
       return res.status(404).json({ error: "Quiz not found" });
     }
+    // let userProgress = null;
+    // userProgress = quiz.userProgress.find(
+    //   (progress) => progress.userId.toString() === userId
+    // );
 
-    let userProgress = quiz.userProgress.find(
-      (progress) => progress.userId.toString() === userId
-    );
+    // if (!userProgress) {
+    let userProgress = {
+      userId: userId,
+      score: score,
+      timeTaken: timeTaken,
+      completedAt: new Date(),
+      questions: questions,
+    };
+    // quiz.userProgress.push(userProgress);
+    // } else {
+    // userProgress.score = score;
+    // userProgress.timeTaken = timeTaken;
+    // userProgress.completedAt = new Date();
+    // }
 
-    if (!userProgress) {
-      userProgress = {
-        userId: userId,
-        score: score,
-        timeTaken: timeTaken,
-        completedAt: new Date(),
-        questions: [],
-      };
-      quiz.userProgress.push(userProgress);
-    } else {
-      userProgress.score = score;
-      userProgress.timeTaken = timeTaken;
-      userProgress.completedAt = new Date();
-    }
-
-    userProgress.questions = questions;
+    // userProgress.questions = questions;
     quiz.userProgress.push(userProgress);
 
     await quiz.save();
@@ -369,9 +369,11 @@ const getUserQuizProgress = async (req, res) => {
       return res.json({ error: "Quiz not found" });
     }
 
-    const userProgress = quiz.userProgress.find(
+    const userProgress = quiz.userProgress.filter(
       (progress) => progress.userId.toString() === userId
     );
+
+    console.log(userProgress);
 
     res.json({ userProgress });
   } catch (error) {
@@ -380,34 +382,34 @@ const getUserQuizProgress = async (req, res) => {
   }
 };
 
-const resetUserQuizProgress = async (req, res) => {
-  const { quizId, userId } = req.params;
+// const resetUserQuizProgress = async (req, res) => {
+//   const { quizId, userId } = req.params;
 
-  try {
-    const quiz = await Quiz.findById(quizId);
+//   try {
+//     const quiz = await Quiz.findById(quizId);
 
-    if (!quiz) {
-      return res.status(404).json({ error: "Quiz not found" });
-    }
+//     if (!quiz) {
+//       return res.status(404).json({ error: "Quiz not found" });
+//     }
 
-    const progressIndex = quiz.userProgress.findIndex(
-      (progress) => progress.userId.toString() === userId
-    );
+//     const progressIndex = quiz.userProgress.findIndex(
+//       (progress) => progress.userId.toString() === userId
+//     );
 
-    if (progressIndex === -1) {
-      return res.status(404).json({ error: "User progress not found" });
-    }
+//     if (progressIndex === -1) {
+//       return res.status(404).json({ error: "User progress not found" });
+//     }
 
-    quiz.userProgress.splice(progressIndex, 1);
+//     quiz.userProgress.splice(progressIndex, 1);
 
-    await quiz.save();
+//     await quiz.save();
 
-    res.json({ message: "User quiz progress reset successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+//     res.json({ message: "User quiz progress reset successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 
 const shareQuiz = async (req, res) => {
   try {
@@ -516,7 +518,7 @@ module.exports = {
   deleteQuiz,
   updateQuestionStatusInQuiz,
   getUserQuizProgress,
-  resetUserQuizProgress,
+  // resetUserQuizProgress,
   shareQuiz,
   acceptQuiz,
   denyQuiz,

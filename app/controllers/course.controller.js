@@ -65,7 +65,9 @@ const createCourse = async (req, res) => {
       return;
     }
   }
-  const time = chaptersArray.length * 3 * 580;
+  let randomTime = Math.floor(Math.random() * (610 - 560 + 1) + 560);
+  const time = chaptersArray.length * 3 * randomTime;
+
   let checkDescription = "";
   let checkTitle = "";
   if (description == "") {
@@ -281,7 +283,7 @@ const generateYouTubeVideo = async (title, course) => {
     const { data } = await axios.get(
       `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=5`
     );
-
+    console.log(" Data:", data);
     const videoId = data.items[0].id.videoId;
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
@@ -355,7 +357,7 @@ const getQuestion = async (title, transcript, numQuestions) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4-1106-preview",
       messages: [
         {
           role: "system",
